@@ -3,9 +3,6 @@ from pybricks.hubs import TechnicHub
 from pybricks.pupdevices import Motor
 from pybricks.parameters import Port
 
-
-"""tarkasta mikä portti ohjaa mitäkin moottoria ja kommentoi oikeat koodiin"""
-
 # Yhdistä ensimmäinen Technic Hub
 hub_upper = TechnicHub()
 motor1 = Motor(Port.A)  # Hub 1, moottori Port.A
@@ -28,33 +25,49 @@ joystick.init()
 
 print(f"Connected to joystick: {joystick.get_name()}")
 
-"""Tästä eteenpäin pitää muokata, koska tämä on vain esimerkki"""
+# Funktio moottorin nopeuden ohjaamiseen
+def run_motor(motor, speed):
+    motor.run(speed)
+
+# Pysäytä moottori
+def stop_motor(motor):
+    motor.stop()  # Poistettiin Stop.BRAKE, koska se ei ole tarpeen
+
 try:
     while True:
         pygame.event.pump()  # Päivitä tapahtumajono
 
-        # 1. Käytä painikkeita (napit) moottorin toimintaan
+        # 1. Käytä painikkeita moottorin toimintaan
         if joystick.get_button(0):  # A-nappi
-            motor.run1(500)  # Käynnistä moottori nopeudella 500 deg/s
-            print("Motor is running forward!")
+            run_motor(motor5, 500)  # Käynnistä moottori 1 nopeudella 500 deg/s
+            print("Motor 1 running forward!")
         elif joystick.get_button(1):  # B-nappi
-            motor.run1(-500)  # Käynnistä moottori taaksepäin nopeudella -500 deg/s
-            print("Motor is running backward!")
+            run_motor(motor5, -500)  # Käynnistä moottori 1 taaksepäin nopeudella -500 deg/s
+            print("Motor 1 running backward!")
         elif joystick.get_button(2):  # X-nappi
-            motor.stop()  # Pysäytä moottori
-            print("Motor stopped.")
+            stop_motor(motor5)  # Pysäytä moottori 1
+            print("Motor 1 stopped.")
 
-        # 2. Käytä triggereitä (liipaisimet) nopeuden ohjaukseen
+        # 2. Käytä triggereitä nopeuden ohjaukseen
         trigger_left = joystick.get_axis(2)  # LT (Vasen liipaisin)
         trigger_right = joystick.get_axis(5)  # RT (Oikea liipaisin)
 
         if trigger_left > 0.1:  # Jos LT liipaisin painettu
-            motor.run5(-int(trigger_left * 1000))  # Suureneva nopeus taaksepäin
-            print(f"Motor running backward at speed: {-int(trigger_left * 1000)}")
+            run_motor(motor6, -int(trigger_left * 1000))  # Moottori 2 taaksepäin
+            print(f"Motor 2 running backward at speed: {-int(trigger_left * 1000)}")
         elif trigger_right > 0.1:  # Jos RT liipaisin painettu
-            motor.run6(int(trigger_right * 1000))  # Suureneva nopeus eteenpäin
-            print(f"Motor running forward at speed: {int(trigger_right * 1000)}")
+            run_motor(motor6, int(trigger_right * 1000))  # Moottori 2 eteenpäin
+            print(f"Motor 2 running forward at speed: {int(trigger_right * 1000)}")
+        else:
+            stop_motor(motor6)  # Pysäytä moottori 2, jos triggereitä ei paineta
 
 except KeyboardInterrupt:
-    motor.stop()
-    print("Motor stopped and program terminated.")
+    # Pysäytä kaikki moottorit ja sammuta ohjelma
+    stop_motor(motor1)
+    stop_motor(motor2)
+    stop_motor(motor3)
+    stop_motor(motor4)
+    stop_motor(motor5)
+    stop_motor(motor6)
+    stop_motor(motor7)
+    print("All motors stopped and program terminated.")
