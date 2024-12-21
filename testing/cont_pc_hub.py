@@ -35,10 +35,10 @@ try:
 
         # 1. Käytä painikkeita (napit) moottorin toimintaan
         if joystick.get_button(0):  # A-nappi
-            motor.run(500)  # Käynnistä moottori nopeudella 500 deg/s
+            motor.run1(500)  # Käynnistä moottori nopeudella 500 deg/s
             print("Motor is running forward!")
         elif joystick.get_button(1):  # B-nappi
-            motor.run(-500)  # Käynnistä moottori taaksepäin nopeudella -500 deg/s
+            motor.run1(-500)  # Käynnistä moottori taaksepäin nopeudella -500 deg/s
             print("Motor is running backward!")
         elif joystick.get_button(2):  # X-nappi
             motor.stop()  # Pysäytä moottori
@@ -49,10 +49,10 @@ try:
         trigger_right = joystick.get_axis(5)  # RT (Oikea liipaisin)
 
         if trigger_left > 0.1:  # Jos LT liipaisin painettu
-            motor.run(-int(trigger_left * 1000))  # Suureneva nopeus taaksepäin
+            motor.run5(-int(trigger_left * 1000))  # Suureneva nopeus taaksepäin
             print(f"Motor running backward at speed: {-int(trigger_left * 1000)}")
         elif trigger_right > 0.1:  # Jos RT liipaisin painettu
-            motor.run(int(trigger_right * 1000))  # Suureneva nopeus eteenpäin
+            motor.run6(int(trigger_right * 1000))  # Suureneva nopeus eteenpäin
             print(f"Motor running forward at speed: {int(trigger_right * 1000)}")
 
 except KeyboardInterrupt:
