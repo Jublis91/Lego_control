@@ -26,6 +26,12 @@ button_names = {
     11: "D-pad Down",
     12: "D-pad Left",
     13: "D-pad Right",
+    14: "left trigger",
+    15: "right trigger",
+    16: "left stick x-axis",
+    17: "left stick y-axis",
+    18: "right stick x-axis",
+    19: "right stick y-axis"
 }
 
 try:
